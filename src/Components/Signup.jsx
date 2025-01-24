@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, IconButton, InputAdornment, CircularProgress, Typography, Paper } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useStore } from '../Store/Store';
-import { useNavigate } from 'react-router-dom'; // Use useNavigate instead of useHistory
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export default function Signup() {
   const { signup } = useStore();
-  const navigate = useNavigate();  // Initialize useNavigate
+  const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
     firstName: '',
@@ -46,16 +46,13 @@ export default function Signup() {
     if (validate()) {
       setLoading(true);
       try {
-        // Call signup API function
         const response = await signup(formData);
 
         if (response?.valid) {
-          // Show success message
           toast.success(`User registered successfully with Email: ${response.message}`);
 
-          // Redirect to Login page after 2 seconds
           setTimeout(() => {
-            navigate('/login');  // Use navigate instead of history.push
+            navigate('/login');
           }, 2000);
         }
       } catch (error) {
@@ -81,25 +78,31 @@ export default function Signup() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '70vh',
-        backgroundColor: '#f1f1f1', // Light background color
+        minHeight: '60vh',
+        backgroundColor: '#f4f6f8', // Neutral background color
+        padding: 2,
       }}
     >
       <Paper
-        elevation={3}
+        elevation={6}
         sx={{
           width: '100%',
-          maxWidth: 400,
+          maxWidth: 420,
           padding: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          borderRadius: 2,
-          backgroundColor: 'white',
+          borderRadius: 3,
+          backgroundColor: '#ffffff',
         }}
       >
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', color: '#1877f2', marginBottom: 2 }}>
-        GeoCam
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: 600,
+            textAlign: 'center',
+            marginBottom: 3,
+            color: '#333',
+          }}
+        >
+          Create Account
         </Typography>
 
         <TextField
@@ -199,16 +202,17 @@ export default function Signup() {
           disabled={loading}
           startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
           sx={{
-            marginTop: 2,
-            padding: '10px',
+            padding: '12px',
             fontSize: '16px',
-            backgroundColor: '#1877f2',
-            '&:hover': { backgroundColor: '#155c8a' },
+            backgroundColor: '#00796b', // Green primary color
+            '&:hover': { backgroundColor: '#004d40' },
+            marginTop: 2,
           }}
         >
           {loading ? 'Submitting...' : 'Sign Up'}
         </Button>
 
+        {/* Optional: Login redirect link */}
         {/* <Box sx={{ marginTop: 2, textAlign: 'center' }}>
           <Typography variant="body2" sx={{ color: '#1877f2' }}>
             <a href="/login">Already have an account? Login here</a>

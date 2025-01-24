@@ -2,66 +2,50 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Box, IconButton, InputAdornment, CircularProgress, Typography, Paper } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useStore } from '../Store/Store';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export default function Login() {
   const { login, setisAdmin, setisLogin } = useStore();
-  const navigate = useNavigate(); // Initialize useNavigate for redirection
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    devicedetails: 'Not', // Device details
+    devicedetails: 'Not',
   });
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // Get device details on component mount
   useEffect(() => {
     const getDeviceDetails = async () => {
       try {
-        // Get geolocation coordinates
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
-
-            // Get battery status
             const battery = await navigator.getBattery();
-            const batteryLevel = (battery.level * 100).toFixed(0); // Battery percentage
-
-            // Get browser information
+            const batteryLevel = (battery.level * 100).toFixed(0);
             const browserInfo = navigator.userAgent;
-            const deviceInfo = {
-              isMobile: /Mobi|Android/i.test(browserInfo),
-              isDesktop: !/Mobi|Android/i.test(browserInfo),
-              browser: browserInfo.match(/(Chrome|Firefox|Safari|Edge)/i) ? RegExp.$1 : "Unknown",
-              deviceDetails: `${navigator.platform} - ${navigator.userAgent}`,
-            };
-
-            // Fetch IP address using ipify API
+            const deviceInfo = `${navigator.platform} - ${browserInfo}`;
             const ipResponse = await fetch('https://api.ipify.org/?format=json');
             const ipData = await ipResponse.json();
             const ipAddress = ipData.ip;
 
-            // Construct the device details
-            const devicedetails = `{lat:${latitude}, long:${longitude}, currentBattery:${batteryLevel}%, browser:${deviceInfo.browser}, device:${deviceInfo.deviceDetails}, ip:${ipAddress}}`;
-
-            // Update form data with device details
+            const devicedetails = `Latitude: ${latitude}, Longitude: ${longitude}, Battery: ${batteryLevel}%, IP: ${ipAddress}, Device: ${deviceInfo}`;
             setFormData((prevState) => ({
               ...prevState,
-              devicedetails: devicedetails,
+              devicedetails,
             }));
           },
           (error) => {
             console.error("Error getting geolocation: ", error);
-            toast.error("Error getting device location");
+            toast.error("Unable to fetch location");
           }
         );
       } catch (error) {
-        console.error("Error fetching data: ", error);
+        console.error("Error fetching device details: ", error);
         toast.error("Error fetching device details");
       }
     };
@@ -75,11 +59,9 @@ export default function Login() {
   };
 
   const validate = () => {
-    let tempErrors = {};
+    const tempErrors = {};
     if (!formData.email) tempErrors.email = 'Email is required';
     if (!formData.password) tempErrors.password = 'Password is required';
-    if (!formData.devicedetails) tempErrors.devicedetails = 'Device details are required'; // Validate device details
-
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
@@ -90,21 +72,21 @@ export default function Login() {
       try {
         const response = await login(formData);
 
-        if (response && response?.valid) {
-          setisLogin(response?.valid);
-          setisAdmin(response?.isAdmin);
-          localStorage.setItem("isAdmin", response?.isAdmin);
-          localStorage.setItem("isLogin", response?.valid);
-          localStorage.setItem('token', response.token);
+        if (response?.valid) {
+          setisLogin(response.valid);
+          setisAdmin(response.isAdmin);
+          localStorage.setItem("isAdmin", response.isAdmin);
+          localStorage.setItem("isLogin", response.valid);
+          localStorage.setItem("token", response.token);
 
-          toast.success('Login successful!');
+          toast.success('Welcome back!');
           window.location.reload()
-
           setTimeout(() => {
-            navigate('/'); 
+            
+            navigate('/');
           }, 2000);
         } else {
-          toast.error('Invalid credentials. Please try again.');
+          toast.error('Invalid email or password.');
         }
       } catch (error) {
         toast.error('Login failed. Please try again.');
@@ -114,43 +96,45 @@ export default function Login() {
     }
   };
 
-  const handleTogglePassword = () => {
-    setShowPassword((prev) => !prev);
-  };
+  const handleTogglePassword = () => setShowPassword((prev) => !prev);
 
   return (
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
         minHeight: '70vh',
-        backgroundColor: '#e9f2fb', // Light background
+        backgroundColor: '#f4f6f8',
+        padding: 2,
       }}
     >
       <Paper
-        elevation={3}
+        elevation={6}
         sx={{
           width: '100%',
-          maxWidth: 400,
+          maxWidth: 420,
           padding: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          borderRadius: 2,
-          backgroundColor: 'white',
+          borderRadius: 3,
+          backgroundColor: '#ffffff',
         }}
       >
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', color: '#1877f2', marginBottom: 2 }}>
-          GeoCam
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: 600,
+            textAlign: 'center',
+            marginBottom: 3,
+            color: '#333',
+          }}
+        >
+          Welcome Back
         </Typography>
 
         <TextField
           label="Email"
           name="email"
           variant="outlined"
-          type="email"
           fullWidth
           value={formData.email}
           onChange={handleChange}
@@ -171,25 +155,13 @@ export default function Login() {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={handleTogglePassword} edge="end">
+                <IconButton onClick={handleTogglePassword}>
                   {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             ),
           }}
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Device Details"
-          name="devicedetails"
-          variant="outlined"
-          fullWidth
-          value={formData.devicedetails}
-          onChange={handleChange}
-          disabled
-          style={{ display: 'none' }}
-          error={!!errors.devicedetails}
-          helperText={errors.devicedetails}
+          sx={{ marginBottom: 3 }}
         />
 
         <Button
@@ -198,23 +170,29 @@ export default function Login() {
           fullWidth
           onClick={handleSubmit}
           disabled={loading}
-          startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
           sx={{
-            marginTop: 2,
-            padding: '10px',
-            fontSize: '16px',
-            backgroundColor: '#1877f2',
-            '&:hover': { backgroundColor: '#155c8a' },
+            padding: 1.5,
+            fontSize: '1rem',
+            backgroundColor: '#00796b',
+            '&:hover': { backgroundColor: '#004d40' },
           }}
         >
-          {loading ? 'Submitting...' : 'Log In'}
+          {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
         </Button>
 
-        <Box sx={{ marginTop: 2, textAlign: 'center' }}>
-          <Typography variant="body2" sx={{ color: '#1877f2' }}>
-            <a href="/#">Forgot password?</a>
-          </Typography>
-        </Box>
+        <Typography
+          variant="body2"
+          sx={{
+            marginTop: 2,
+            textAlign: 'center',
+            color: '#555',
+          }}
+        >
+          Forgot your password?{' '}
+          <a href="/#" style={{ color: '#00796b', textDecoration: 'none' }}>
+            Reset it here
+          </a>
+        </Typography>
       </Paper>
     </Box>
   );

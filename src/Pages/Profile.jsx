@@ -61,20 +61,17 @@ export default function Profile() {
 
   const validateForm = () => {
     const errors = {};
-    // Validate if fields are empty
     if (!formData.firstName) errors.firstName = "First name is required.";
     if (!formData.lastName) errors.lastName = "Last name is required.";
     if (!formData.email) errors.email = "Email is required.";
     if (!formData.phoneNumber) errors.phoneNumber = "Phone number is required.";
     if (newPassword && newPassword.length < 6) errors.password = "Password must be at least 6 characters.";
     
-    // Validate phone number (should be 10 digits)
     const phonePattern = /^[0-9]{10}$/;
     if (formData.phoneNumber && !phonePattern.test(formData.phoneNumber)) {
       errors.phoneNumber = "Phone number must be 10 digits.";
     }
 
-    // Validate email format
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (formData.email && !emailPattern.test(formData.email)) {
       errors.email = "Invalid email format.";
@@ -85,70 +82,60 @@ export default function Profile() {
 
   const handleUpdate = async () => {
     const formErrors = validateForm();
-    setErrors(formErrors); // Set errors if any
+    setErrors(formErrors);
 
     if (Object.keys(formErrors).length > 0) {
-      // If there are errors, don't submit the form
       return;
     }
 
     const updatedData = { ...formData };
     if (newPassword) {
-      updatedData.password = newPassword; // Include new password if changed
+      updatedData.password = newPassword;
     }
 
     try {
       await updateUserProfile(updatedData);
-      setIsEditing(false); // Disable editing after update
-      setNewPassword(""); // Clear new password field
-      toast.success("Profile updated successfully!"); // Show success toast
+      setIsEditing(false);
+      setNewPassword("");
+      toast.success("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
-      toast.error("User with the same details may already exist"); // Show error toast
+      toast.error("User with the same details may already exist");
     }
   };
 
   if (loading) {
     return (
       <Layout>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100vh" // Full viewport height
-        >
+        <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
           <CircularProgress />
         </Box>
       </Layout>
     );
   }
-  
+
   return (
     <Layout>
       <Container maxWidth="lg">
         <Paper elevation={3} sx={{ padding: 4, borderRadius: "12px" }}>
-          {/* Profile Header */}
           <Grid container spacing={3}>
             <Grid item xs={12} md={4} container direction="column" alignItems="center">
-              {/* Profile Picture */}
               <Avatar
                 sx={{
                   width: 120,
                   height: 120,
                   marginBottom: 2,
-                  backgroundColor: "#3f51b5", // Default color
+                  backgroundColor: "#00796b", // Green background
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   fontSize: "40px",
                 }}
               >
-                {/* Display First Letter of First Name and Last Letter of Last Name */}
                 {formData.firstName?.charAt(0).toUpperCase()}
                 {formData.lastName?.charAt(formData.lastName.length - 1).toUpperCase()}
               </Avatar>
 
-              {/* Name & Customer ID */}
               <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 {formData.firstName} {formData.lastName}
               </Typography>
@@ -157,7 +144,6 @@ export default function Profile() {
               </Typography>
             </Grid>
 
-            {/* Profile Details */}
             <Grid item xs={12} md={8}>
               <Box>
                 <Typography variant="h6" sx={{ marginBottom: 2 }}>
@@ -217,7 +203,6 @@ export default function Profile() {
                     />
                   </Grid>
 
-                  {/* Password Input (Only when Editing) */}
                   {isEditing && (
                     <Grid item xs={12}>
                       <TextField
@@ -237,7 +222,6 @@ export default function Profile() {
                 </Grid>
               </Box>
 
-              {/* Buttons */}
               <Box mt={3} display="flex" justifyContent="space-between">
                 <Button
                   variant="outlined"
@@ -251,6 +235,7 @@ export default function Profile() {
                     variant="contained"
                     color="secondary"
                     onClick={handleUpdate}
+                    sx={{ backgroundColor: "#00796b", '&:hover': { backgroundColor: '#004d40' } }} // Green background for save button
                   >
                     Save Changes
                   </Button>

@@ -50,6 +50,7 @@ export default function Layout({ children, titlename }) {
     minHeight: "100vh",
     position: "relative",
     overflow: "hidden",
+    backgroundColor: "#f1f1f1", // Light background color
   };
 
   const layoutContentStyle = {
@@ -69,6 +70,7 @@ export default function Layout({ children, titlename }) {
     left: 0,
     width: "100%",
     zIndex: 1000,
+    backgroundColor: "#00796b", // Green background for the navbar
   };
 
   const menuStyle = {
@@ -77,14 +79,16 @@ export default function Layout({ children, titlename }) {
     left: 0,
     width: "100%",
     zIndex: 1000,
+    backgroundColor: "#00796b", // Green background for the menu
   };
 
   const footorStyle = {
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#00796b", // Green footer background
     textAlign: "center",
     padding: "10px 0",
     width: "100%",
     marginTop: "auto",
+    color: "#fff", // White text color
   };
 
   if (showFlashScreen) {
@@ -97,7 +101,7 @@ export default function Layout({ children, titlename }) {
           alignItems: "center",
           height: "100vh",
           width: "100vw",
-          backgroundColor: "#1a73e8",
+          backgroundColor: "#00796b", // Flash screen in green color
           color: "#fff",
         }}
       >

@@ -22,7 +22,7 @@ const Navbar = () => {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: '#00796b' }}> {/* Green background */}
       <Container>
         <Toolbar disableGutters>
           {/* For Mobile and Tablet (Logo in Center) */}
@@ -60,7 +60,7 @@ const Navbar = () => {
                         Admin
                       </Button>
                     )}
-                      <Button component={Link} to="/" color="inherit">
+                    <Button component={Link} to="/" color="inherit">
                       Home
                     </Button>
                     <Button component={Link} to="/profile" color="inherit">
