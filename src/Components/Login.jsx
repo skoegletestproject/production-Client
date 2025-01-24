@@ -100,7 +100,8 @@ export default function Login() {
           toast.success('Login successful!');
 
           setTimeout(() => {
-            navigate('/'); // Redirect to home page
+            navigate('/'); 
+            window.location.reload()
           }, 2000);
         } else {
           toast.error('Invalid credentials. Please try again.');
