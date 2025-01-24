@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Box, Typography, CircularProgress } from "@mui/material";
 import Footor from "./Footor";
 import Navbar from "./Navbar";
 import { Helmet } from "react-helmet";
@@ -8,20 +9,35 @@ import Menu from "./Menu";
 
 export default function Layout({ children, titlename }) {
   const [isMobile, setIsMobile] = useState(false);
+  const [loading, setLoading] = useState(true); // State to control loading screen
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setIsMobile(true); // Mobile or tablet screen
-      } else {
-        setIsMobile(false); // Desktop screen
+    // API Call
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://production-server-we1m.onrender.com/ping");
+        const data = await response.json();
+        if (data.message) {
+          setLoading(false); // Hide flash screen after successful API response
+        }
+      } catch (error) {
+        console.error("Error fetching API:", error);
+        setLoading(false); // Hide flash screen even if API fails
       }
     };
 
-    handleResize(); // Check size on initial load
-    window.addEventListener("resize", handleResize); // Update on window resize
+    fetchData();
+  }, []);
 
-    return () => window.removeEventListener("resize", handleResize); // Cleanup on unmount
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Mobile or tablet screen
+    };
+
+    handleResize(); // Check size on initial load
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const layoutContainerStyle = {
@@ -66,6 +82,28 @@ export default function Layout({ children, titlename }) {
     width: "100%",
     marginTop: "auto",
   };
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          width: "100vw",
+          backgroundColor: "#1a73e8",
+          color: "#fff",
+        }}
+      >
+        <Typography variant="h4" gutterBottom>
+          Skoegle
+        </Typography>
+        <CircularProgress color="inherit" />
+      </Box>
+    );
+  }
 
   return (
     <div style={layoutContainerStyle}>
