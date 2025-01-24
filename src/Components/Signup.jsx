@@ -81,7 +81,7 @@ export default function Signup() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '100vh',
+        minHeight: '70vh',
         backgroundColor: '#f1f1f1', // Light background color
       }}
     >

@@ -125,7 +125,7 @@ export default function Login() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '100vh',
+        minHeight: '70vh',
         backgroundColor: '#e9f2fb', // Light background
       }}
     >
