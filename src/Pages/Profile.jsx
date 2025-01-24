@@ -111,11 +111,18 @@ export default function Profile() {
   if (loading) {
     return (
       <Layout>
-        <CircularProgress />
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100vh" // Full viewport height
+        >
+          <CircularProgress />
+        </Box>
       </Layout>
     );
   }
-
+  
   return (
     <Layout>
       <Container maxWidth="lg">

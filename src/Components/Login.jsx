@@ -98,10 +98,10 @@ export default function Login() {
           localStorage.setItem('token', response.token);
 
           toast.success('Login successful!');
+          window.location.reload()
 
           setTimeout(() => {
             navigate('/'); 
-            window.location.reload()
           }, 2000);
         } else {
           toast.error('Invalid credentials. Please try again.');
@@ -212,7 +212,7 @@ export default function Login() {
 
         <Box sx={{ marginTop: 2, textAlign: 'center' }}>
           <Typography variant="body2" sx={{ color: '#1877f2' }}>
-            <a href="/#">Forgotten password?</a>
+            <a href="/#">Forgot password?</a>
           </Typography>
         </Box>
       </Paper>
