@@ -9,24 +9,28 @@ import Menu from "./Menu";
 
 export default function Layout({ children, titlename }) {
   const [isMobile, setIsMobile] = useState(false);
-  const [loading, setLoading] = useState(true); // State to control loading screen
+  const [showFlashScreen, setShowFlashScreen] = useState(false);
 
   useEffect(() => {
-    // API Call
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://production-server-we1m.onrender.com/ping");
-        const data = await response.json();
-        if (data.message) {
-          setLoading(false); // Hide flash screen after successful API response
-        }
-      } catch (error) {
-        console.error("Error fetching API:", error);
-        setLoading(false); // Hide flash screen even if API fails
-      }
-    };
+    // Check if user has already visited the site
+    const hasVisited = localStorage.getItem("hasVisited");
 
-    fetchData();
+    if (!hasVisited) {
+      setShowFlashScreen(true); // Show the flash screen
+      fetch("https://production-server-we1m.onrender.com/ping")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message === "We Got your Request") {
+            localStorage.setItem("hasVisited", "true"); // Set flag to indicate first visit
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching API:", error);
+        })
+        .finally(() => {
+          setShowFlashScreen(false); // Hide flash screen when the response is received
+        });
+    }
   }, []);
 
   useEffect(() => {
@@ -83,7 +87,7 @@ export default function Layout({ children, titlename }) {
     marginTop: "auto",
   };
 
-  if (loading) {
+  if (showFlashScreen) {
     return (
       <Box
         sx={{
