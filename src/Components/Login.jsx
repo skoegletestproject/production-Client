@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, IconButton, InputAdornment, CircularProgress } from '@mui/material';
+import { TextField, Button, Box, IconButton, InputAdornment, CircularProgress, Typography, Paper } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useStore } from '../Store/Store';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import { toast } from 'react-toastify';
 
 export default function Login() {
-  const { login,setisAdmin,setisLogin } = useStore();
+  const { login, setisAdmin, setisLogin } = useStore();
   const navigate = useNavigate(); // Initialize useNavigate for redirection
 
   const [formData, setFormData] = useState({
@@ -20,7 +20,6 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   // Get device details on component mount
- 
   useEffect(() => {
     const getDeviceDetails = async () => {
       try {
@@ -41,12 +40,6 @@ export default function Login() {
               browser: browserInfo.match(/(Chrome|Firefox|Safari|Edge)/i) ? RegExp.$1 : "Unknown",
               deviceDetails: `${navigator.platform} - ${navigator.userAgent}`,
             };
-
-            // Fetch address using OpenCageData API
-            // const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=03c48dae07364cabb7f121d8c1519492&no_annotations=1&language=en`);
-            // const data = await response.json();
-
-            // const address = data.results && data.results[0] ? data.results[0].formatted : 'Address not found';
 
             // Fetch IP address using ipify API
             const ipResponse = await fetch('https://api.ipify.org/?format=json');
@@ -95,20 +88,18 @@ export default function Login() {
     if (validate()) {
       setLoading(true);
       try {
-
         const response = await login(formData);
 
         if (response && response?.valid) {
-          // console.log(response)
-          setisLogin(response?.valid)
-          setisAdmin(response?.isAdmin)
-          localStorage.setItem("isAdmin",response?.isAdmin)
-          localStorage.setItem("isLogin",response?.valid)
+          setisLogin(response?.valid);
+          setisAdmin(response?.isAdmin);
+          localStorage.setItem("isAdmin", response?.isAdmin);
+          localStorage.setItem("isLogin", response?.valid);
           localStorage.setItem('token', response.token);
 
           toast.success('Login successful!');
 
-         setTimeout(() => {
+          setTimeout(() => {
             navigate('/'); // Redirect to home page
           }, 2000);
         } else {
@@ -133,68 +124,97 @@ export default function Login() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        mt: 4,
-        gap: 2,
-        maxWidth: 400,
-        margin: 'auto',
+        minHeight: '100vh',
+        backgroundColor: '#e9f2fb', // Light background
       }}
     >
-      <h1>Login</h1>
-
-      <TextField
-        label="Email"
-        name="email"
-        variant="outlined"
-        type="email"
-        fullWidth
-        value={formData.email}
-        onChange={handleChange}
-        error={!!errors.email}
-        helperText={errors.email}
-      />
-      <TextField
-        label="Password"
-        name="password"
-        variant="outlined"
-        type={showPassword ? 'text' : 'password'}
-        fullWidth
-        value={formData.password}
-        onChange={handleChange}
-        error={!!errors.password}
-        helperText={errors.password}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={handleTogglePassword} edge="end">
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          ),
+      <Paper
+        elevation={3}
+        sx={{
+          width: '100%',
+          maxWidth: 400,
+          padding: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          borderRadius: 2,
+          backgroundColor: 'white',
         }}
-      />
-      <TextField
-        label="Device Details"
-        name="devicedetails"
-        variant="outlined"
-        fullWidth
-        value={formData.devicedetails}
-        onChange={handleChange}
-        disabled
-        style={{display:"none"}}
-        error={!!errors.devicedetails}
-        helperText={errors.devicedetails}
-      />
-
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        onClick={handleSubmit}
-        disabled={loading}
-        startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
       >
-        {loading ? 'Submitting...' : 'Login'}
-      </Button>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', color: '#1877f2', marginBottom: 2 }}>
+          GeoCam
+        </Typography>
+
+        <TextField
+          label="Email"
+          name="email"
+          variant="outlined"
+          type="email"
+          fullWidth
+          value={formData.email}
+          onChange={handleChange}
+          error={!!errors.email}
+          helperText={errors.email}
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Password"
+          name="password"
+          variant="outlined"
+          type={showPassword ? 'text' : 'password'}
+          fullWidth
+          value={formData.password}
+          onChange={handleChange}
+          error={!!errors.password}
+          helperText={errors.password}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleTogglePassword} edge="end">
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Device Details"
+          name="devicedetails"
+          variant="outlined"
+          fullWidth
+          value={formData.devicedetails}
+          onChange={handleChange}
+          disabled
+          style={{ display: 'none' }}
+          error={!!errors.devicedetails}
+          helperText={errors.devicedetails}
+        />
+
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handleSubmit}
+          disabled={loading}
+          startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+          sx={{
+            marginTop: 2,
+            padding: '10px',
+            fontSize: '16px',
+            backgroundColor: '#1877f2',
+            '&:hover': { backgroundColor: '#155c8a' },
+          }}
+        >
+          {loading ? 'Submitting...' : 'Log In'}
+        </Button>
+
+        <Box sx={{ marginTop: 2, textAlign: 'center' }}>
+          <Typography variant="body2" sx={{ color: '#1877f2' }}>
+            <a href="/#">Forgotten password?</a>
+          </Typography>
+        </Box>
+      </Paper>
     </Box>
   );
 }
