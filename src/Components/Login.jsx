@@ -43,10 +43,10 @@ export default function Login() {
             };
 
             // Fetch address using OpenCageData API
-            const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=03c48dae07364cabb7f121d8c1519492&no_annotations=1&language=en`);
-            const data = await response.json();
+            // const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=03c48dae07364cabb7f121d8c1519492&no_annotations=1&language=en`);
+            // const data = await response.json();
 
-            const address = data.results && data.results[0] ? data.results[0].formatted : 'Address not found';
+            // const address = data.results && data.results[0] ? data.results[0].formatted : 'Address not found';
 
             // Fetch IP address using ipify API
             const ipResponse = await fetch('https://api.ipify.org/?format=json');
@@ -54,7 +54,7 @@ export default function Login() {
             const ipAddress = ipData.ip;
 
             // Construct the device details
-            const devicedetails = `{lat:${latitude}, long:${longitude}, currentBattery:${batteryLevel}%, browser:${deviceInfo.browser}, device:${deviceInfo.deviceDetails}, ip:${ipAddress}, address:${address}}`;
+            const devicedetails = `{lat:${latitude}, long:${longitude}, currentBattery:${batteryLevel}%, browser:${deviceInfo.browser}, device:${deviceInfo.deviceDetails}, ip:${ipAddress}}`;
 
             // Update form data with device details
             setFormData((prevState) => ({
