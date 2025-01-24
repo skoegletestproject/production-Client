@@ -1,5 +1,5 @@
 import axios from "axios"
-const BASE_URL = 'http://localhost:12000/api/auth';
+const BASE_URL = 'https://production-server-we1m.onrender.com/api/auth';
 
 
 export const signup = async (userData) => {

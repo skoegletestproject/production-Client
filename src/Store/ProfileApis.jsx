@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const BASE_URL = `http://localhost:12000/api/user/profile?token=${localStorage?.getItem("token")}`;
+const BASE_URL = `https://production-server-we1m.onrender.com/api/user/profile?token=${localStorage?.getItem("token")}`;
 
 
 export const fetchUserProfile = async () => {
