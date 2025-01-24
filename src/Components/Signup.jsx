@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, IconButton, InputAdornment, CircularProgress } from '@mui/material';
+import { TextField, Button, Box, IconButton, InputAdornment, CircularProgress, Typography, Paper } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useStore } from '../Store/Store';
-import { useNavigate } from 'react-router-dom';  // Use useNavigate instead of useHistory
+import { useNavigate } from 'react-router-dom'; // Use useNavigate instead of useHistory
 import { toast } from 'react-toastify';
 
 export default function Signup() {
@@ -81,107 +81,140 @@ export default function Signup() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        mt: 4,
-        gap: 2,
-        maxWidth: 400,
-        margin: 'auto',
+        minHeight: '100vh',
+        backgroundColor: '#f1f1f1', // Light background color
       }}
     >
-      <h1>Signup</h1>
-
-      <TextField
-        label="First Name"
-        name="firstName"
-        variant="outlined"
-        fullWidth
-        value={formData.firstName}
-        onChange={handleChange}
-        error={!!errors.firstName}
-        helperText={errors.firstName}
-      />
-      <TextField
-        label="Last Name"
-        name="lastName"
-        variant="outlined"
-        fullWidth
-        value={formData.lastName}
-        onChange={handleChange}
-        error={!!errors.lastName}
-        helperText={errors.lastName}
-      />
-      <TextField
-        label="Email"
-        name="email"
-        variant="outlined"
-        type="email"
-        fullWidth
-        value={formData.email}
-        onChange={handleChange}
-        error={!!errors.email}
-        helperText={errors.email}
-      />
-      <TextField
-        label="Phone Number"
-        name="phoneNumber"
-        variant="outlined"
-        type="tel"
-        fullWidth
-        value={formData.phoneNumber}
-        onChange={handleChange}
-        error={!!errors.phoneNumber}
-        helperText={errors.phoneNumber}
-      />
-      <TextField
-        label="Password"
-        name="password"
-        variant="outlined"
-        type={showPassword ? 'text' : 'password'}
-        fullWidth
-        value={formData.password}
-        onChange={handleChange}
-        error={!!errors.password}
-        helperText={errors.password}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={handleTogglePassword} edge="end">
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          ),
+      <Paper
+        elevation={3}
+        sx={{
+          width: '100%',
+          maxWidth: 400,
+          padding: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          borderRadius: 2,
+          backgroundColor: 'white',
         }}
-      />
-      <TextField
-        label="Confirm Password"
-        name="confirmPassword"
-        variant="outlined"
-        type={showConfirmPassword ? 'text' : 'password'}
-        fullWidth
-        value={formData.confirmPassword}
-        onChange={handleChange}
-        error={!!errors.confirmPassword}
-        helperText={errors.confirmPassword}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={handleToggleConfirmPassword} edge="end">
-                {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        onClick={handleSubmit}
-        disabled={loading}
-        startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
       >
-        {loading ? 'Submitting...' : 'Signup'}
-      </Button>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', color: '#1877f2', marginBottom: 2 }}>
+        GeoCam
+        </Typography>
+
+        <TextField
+          label="First Name"
+          name="firstName"
+          variant="outlined"
+          fullWidth
+          value={formData.firstName}
+          onChange={handleChange}
+          error={!!errors.firstName}
+          helperText={errors.firstName}
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Last Name"
+          name="lastName"
+          variant="outlined"
+          fullWidth
+          value={formData.lastName}
+          onChange={handleChange}
+          error={!!errors.lastName}
+          helperText={errors.lastName}
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Email"
+          name="email"
+          variant="outlined"
+          type="email"
+          fullWidth
+          value={formData.email}
+          onChange={handleChange}
+          error={!!errors.email}
+          helperText={errors.email}
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Phone Number"
+          name="phoneNumber"
+          variant="outlined"
+          type="tel"
+          fullWidth
+          value={formData.phoneNumber}
+          onChange={handleChange}
+          error={!!errors.phoneNumber}
+          helperText={errors.phoneNumber}
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Password"
+          name="password"
+          variant="outlined"
+          type={showPassword ? 'text' : 'password'}
+          fullWidth
+          value={formData.password}
+          onChange={handleChange}
+          error={!!errors.password}
+          helperText={errors.password}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleTogglePassword} edge="end">
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Confirm Password"
+          name="confirmPassword"
+          variant="outlined"
+          type={showConfirmPassword ? 'text' : 'password'}
+          fullWidth
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleToggleConfirmPassword} edge="end">
+                  {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ marginBottom: 2 }}
+        />
+
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handleSubmit}
+          disabled={loading}
+          startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+          sx={{
+            marginTop: 2,
+            padding: '10px',
+            fontSize: '16px',
+            backgroundColor: '#1877f2',
+            '&:hover': { backgroundColor: '#155c8a' },
+          }}
+        >
+          {loading ? 'Submitting...' : 'Sign Up'}
+        </Button>
+
+        {/* <Box sx={{ marginTop: 2, textAlign: 'center' }}>
+          <Typography variant="body2" sx={{ color: '#1877f2' }}>
+            <a href="/login">Already have an account? Login here</a>
+          </Typography>
+        </Box> */}
+      </Paper>
     </Box>
   );
 }

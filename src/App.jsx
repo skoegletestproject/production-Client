@@ -10,7 +10,8 @@ import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignupPage";
 import HomePage from "./Pages/HomePage";
 import Layout from "./Layout/Layout";
-import NotFoundPage from "./NotFoundPage"
+import NotFoundPage from "./NotFoundPage";
+import Profile from "./Pages/Profile";
 
 export default function App() {
   const { isLogin } = useStore();
@@ -51,16 +52,7 @@ export default function App() {
     },
     {
       path: "/profile",
-      element: (
-        <ProtectedRoute
-          element={
-            <Layout>
-              <h1>Profile</h1>
-            </Layout>
-          }
-          to="/login"
-        />
-      ),
+      element: <ProtectedRoute element={<Profile />} to="/login" />,
     },
     {
       path: "*",

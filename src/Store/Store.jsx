@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { signup, login, logout, verifyUser } from "./Api";
+import { signup, login, logout, verifyUser } from "./AuthApis";
+import { fetchUserProfile, updateUserProfile } from "./ProfileApis";
 
 const StoreContext = createContext(null);
 
@@ -65,6 +66,8 @@ export function StoreProvider({ children }) {
         isAdmin,
         token,
         user: true,
+        fetchUserProfile,
+        updateUserProfile
       }}
     >
       {children}

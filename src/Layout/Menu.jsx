@@ -39,14 +39,16 @@ const Menu = () => {
             style={{ color: isActive('/live') ? 'primary' : 'inherit' }} // Highlight active route
           />
           
-          {/* Profile icon */}
-          <BottomNavigationAction
-            label="Profile"
-            icon={<AccountCircle />}
-            component={Link}
-            to="/profile" // Profile route
-            style={{ color: isActive('/profile') ? 'primary' : 'inherit' }} // Highlight active route
-          />
+          {/* Show Profile icon only when the user is not an admin */}
+          {!isAdmin && (
+            <BottomNavigationAction
+              label="Profile"
+              icon={<AccountCircle />}
+              component={Link}
+              to="/profile" // Profile route
+              style={{ color: isActive('/profile') ? 'primary' : 'inherit' }} // Highlight active route
+            />
+          )}
 
           {/* Admin icon, shown only if user is an admin */}
           {isAdmin && (

@@ -60,6 +60,9 @@ const Navbar = () => {
                         Admin
                       </Button>
                     )}
+                      <Button component={Link} to="/" color="inherit">
+                      Home
+                    </Button>
                     <Button component={Link} to="/profile" color="inherit">
                       Profile
                     </Button>
