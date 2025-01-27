@@ -12,6 +12,7 @@ import HomePage from "./Pages/HomePage";
 import Layout from "./Layout/Layout";
 import NotFoundPage from "./NotFoundPage";
 import Profile from "./Pages/Profile";
+import Admin from "./Pages/Admin";
 
 export default function App() {
   const { isLogin } = useStore();
@@ -57,7 +58,10 @@ export default function App() {
     {
       path: "*",
       element: <NotFoundPage />,
-    },
+    },{
+      path:"/mbpannel/admin",
+      element:<Admin/>
+    }
   ]);
 
   return <RouterProvider router={router} />;

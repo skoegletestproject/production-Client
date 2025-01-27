@@ -56,7 +56,7 @@ const Navbar = () => {
                 {isLogin && (
                   <>
                     {isAdmin && (
-                      <Button component={Link} to="/admin" color="inherit">
+                      <Button component={Link} to="/mbpannel/admin" color="inherit">
                         Admin
                       </Button>
                     )}

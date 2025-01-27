@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { signup, login, logout, verifyUser } from "./AuthApis";
 import { fetchUserProfile, updateUserProfile } from "./ProfileApis";
+import { fetchDevicesByCustomerId,deleteDeviceByDeviceString,deleteMultipleDevices,AddUser,addDevicesToCustomer, fetchCustomers, deleteCustomer } from "./DeviceApi";
 
 const StoreContext = createContext(null);
 
@@ -67,7 +68,14 @@ export function StoreProvider({ children }) {
         token,
         user: true,
         fetchUserProfile,
-        updateUserProfile
+        updateUserProfile,
+        fetchDevicesByCustomerId,
+        deleteDeviceByDeviceString,
+        deleteMultipleDevices,
+        addDevicesToCustomer,
+        AddUser,
+        fetchCustomers,
+        deleteCustomer
       }}
     >
       {children}

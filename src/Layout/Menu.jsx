@@ -56,7 +56,7 @@ const Menu = () => {
               label="Admin"
               icon={<SupervisorAccount />} // Admin icon using SupervisorAccount
               component={Link}
-              to="/admin" // Admin route
+              to="/mbpannel/admin" // Admin route
               style={{ color: isActive('/admin') ? 'primary' : 'inherit' }} // Highlight active route
             />
           )}
