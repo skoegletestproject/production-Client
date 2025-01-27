@@ -17,7 +17,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete"; // Import delete icon
 
 export default function Admin() {
-  const [swapsession, setSwapsession] = useState("checkyourdevices");
+  const [swapsession, setSwapsession] = useState("profile");
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(false); // Loading state for API requests
   const [openSnackbar, setOpenSnackbar] = useState(false); // Snackbar open state
@@ -144,7 +144,7 @@ export default function Admin() {
             scrollButtons="auto"
             aria-label="session tabs"
           >
-            <Tab label="Check Your Devices" value="checkyourdevices" />
+            <Tab label="Login Devices" value="checkyourdevices" />
             <Tab label="Profile" value="profile" />
             {/* Add more tabs here in the future */}
           </Tabs>

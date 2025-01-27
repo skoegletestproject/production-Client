@@ -1,8 +1,8 @@
 import axios  from "axios";
 
-const BASE_URL = 'http://localhost:12000';
+const BASE_URL = 'https://production-server-we1m.onrender.com';
 
-const baseURL = "http://localhost:12000/api";
+const baseURL = "https://production-server-we1m.onrender.com/api";
 
 //divece token collection
 export async function fetchDevicesByCustomerId(custommerId) {
