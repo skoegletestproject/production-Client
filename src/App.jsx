@@ -60,7 +60,7 @@ export default function App() {
       element: <NotFoundPage />,
     },{
       path:"/mbpannel/admin",
-      element:<Admin/>
+      element: <Layout><Admin/></Layout>
     }
   ]);
 

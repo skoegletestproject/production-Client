@@ -7,8 +7,8 @@ const baseURL = "http://localhost:12000/api";
 //divece token collection
 export async function fetchDevicesByCustomerId(custommerId) {
   try {
-    const response = await axios.get(`${BASE_URL}/api/devices/users/admin/custommer/${custommerId}`);
-    console.log('Fetched Devices:', response.data);
+    const response = await axios.get(`${BASE_URL}/api/devices/users/admin/custommer?token=${localStorage.getItem("token")}`);
+    // console.log('Fetched Devices:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching devices:', error.response?.data || error.message);
