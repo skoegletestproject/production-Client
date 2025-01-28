@@ -1,8 +1,9 @@
 import axios  from "axios";
 
-const BASE_URL = 'https://production-server-we1m.onrender.com';
+const {VITE_ENV,VITE_LOCAL_URL,VITE_WEB_URL} = import.meta.env
 
-const baseURL = "https://production-server-we1m.onrender.com/api";
+const BASE_URL = VITE_ENV==="local"?VITE_LOCAL_URL:VITE_WEB_URL
+
 
 //divece token collection
 export async function fetchDevicesByCustomerId(custommerId) {
@@ -17,7 +18,7 @@ export async function fetchDevicesByCustomerId(custommerId) {
 
 export async function deleteDeviceByDeviceString(deviceString) {
   try {
-    const response = await axios.delete(`${BASE_URL}/api/devices/users/admin/custommer/${deviceString}`);
+    const response = await axios.delete(`${BASE_URL}/api/devices/users/admin/custommer/${deviceString}?token=${localStorage?.getItem("token")}`);
     console.log('Deleted Device:', response.data);
     return response.data;
   } catch (error) {
@@ -67,7 +68,7 @@ export async function AddUser(userData) {
 
 export const fetchCustomers = async (custommerId) => {
     try {
-      const response = await axios.get(`${baseURL}/devices/users/admin/custommer/${custommerId}`);
+      const response = await axios.get(`${BASE_URL}/api/devices/users/admin/custommer/myusers?token=${localStorage?.getItem("token")}`);
       console.log("Fetched customers:", response.data);
       return response.data;
     } catch (error) {
@@ -80,7 +81,7 @@ export const fetchCustomers = async (custommerId) => {
 
   export const deleteCustomer = async (custommerId) => {
     try {
-      const response = await axios.delete(`${baseURL}/device/admin/custommer/${custommerId}`);
+      const response = await axios.delete(`${BASE_URL}/api/device/admin/custommer/${custommerId}`);
       console.log("Deleted customer:", response.data);
       return response.data;
     } catch (error) {

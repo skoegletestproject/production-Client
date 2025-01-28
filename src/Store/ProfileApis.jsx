@@ -1,8 +1,8 @@
 import axios from 'axios';
 
+const {VITE_ENV,VITE_LOCAL_URL,VITE_WEB_URL} = import.meta.env
 
-const BASE_URL = `https://production-server-we1m.onrender.com/api/user/profile?token=${localStorage?.getItem("token")}`;
-
+const BASE_URL = VITE_ENV==="local"?`${VITE_LOCAL_URL}/api/user/profile?token=${localStorage?.getItem("token")}`:`${VITE_WEB_URL}/api/user/profile?token=${localStorage?.getItem("token")}`
 
 export const fetchUserProfile = async () => {
   try {

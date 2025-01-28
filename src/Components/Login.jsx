@@ -78,7 +78,7 @@ export default function Login() {
           localStorage.setItem("isAdmin", response.isAdmin);
           localStorage.setItem("isLogin", response.valid);
           localStorage.setItem("token", response.token);
-
+          localStorage.setItem("custommerid",response.custommerId)
           toast.success('Welcome back!');
           window.location.reload()
           setTimeout(() => {

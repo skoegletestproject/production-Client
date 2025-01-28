@@ -1,5 +1,10 @@
 import axios from "axios"
-const BASE_URL = 'https://production-server-we1m.onrender.com/api/auth';
+
+const {VITE_ENV,VITE_LOCAL_URL,VITE_WEB_URL} = import.meta.env
+// console.log(VITE_ENV)
+
+const BASE_URL = VITE_ENV==="local"?`${VITE_LOCAL_URL}/api/auth`:`${VITE_WEB_URL}/api/auth`
+
 
 
 export const signup = async (userData) => {

@@ -19,6 +19,7 @@ const Navbar = () => {
     localStorage.clear();
     setisLogin(false);
     logout();
+    console.clear()
   }
 
   return (

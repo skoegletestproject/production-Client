@@ -17,7 +17,7 @@ export function StoreProvider({ children }) {
   const [isLogin, setisLogin] = useState(localStorage?.getItem("isLogin") === "true");
   const [isAdmin, setisAdmin] = useState(localStorage?.getItem("isAdmin") === "true");
   const [token, settoken] = useState(localStorage?.getItem("token") || "");
-
+  
   // console.log({ isLogin, isAdmin, token });
 
   useEffect(() => {
@@ -51,6 +51,7 @@ export function StoreProvider({ children }) {
     setisLogin(false);
     setisAdmin(false);
     settoken("");
+    console.clear()
     // console.log("User logged out");
   };
 
