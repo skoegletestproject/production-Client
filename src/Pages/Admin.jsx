@@ -170,9 +170,10 @@ export default function Admin() {
   };
 
   const renderDeviceDetails = () => (
+    <div style={{height:"700px"}}>
     <Grid container spacing={3}>
       {devices.map((device) => (
-        <Grid item xs={12} sm={6} md={4} key={device._id}>
+        <Grid item xs={12} sm={6} md={10} key={device._id}>
           <Card variant="outlined" sx={cardStyle}>
             <CardContent>
               <Typography variant="h6" sx={{ color: "#1976d2", fontWeight: "bold" }}>
@@ -195,12 +196,14 @@ export default function Admin() {
         </Grid>
       ))}
     </Grid>
+    </div>
   );
 
   const renderUsers = () => (
+    <div style={{height:"700px"}}>
     <Grid container spacing={3}>
       {users.map((user) => (
-        <Grid item xs={12} sm={6} md={10} key={user._id}>
+        <Grid item xs={12} sm={10} md={10} key={user._id}>
           <Card variant="outlined" sx={cardStyle}>
             <CardContent>
               <Typography variant="h6" sx={{ color: "#1976d2", fontWeight: "bold" }}>
@@ -223,6 +226,7 @@ export default function Admin() {
         </Grid>
       ))}
     </Grid>
+    </div>
   );
 
   const renderAddUserForm = () => (
@@ -318,14 +322,14 @@ export default function Admin() {
   return (
     <Box sx={{ padding: 4 }}>
       <Tabs value={swapsession} onChange={handleSessionChange} centered>
-        <Tab label="Profile" value="profile" />
         <Tab label="Devices" value="devices" />
+        <Tab label="Profile" value="profile" />
         <Tab label="Users" value="users" />
         <Tab label="Add User" value="addUser" />
       </Tabs>
 
-      {swapsession === "profile" && <AdminProfile />}
       {swapsession === "devices" && renderDeviceDetails()}
+      {swapsession === "profile" && <AdminProfile />}
       {swapsession === "users" && renderUsers()}
       {swapsession === "addUser" && renderAddUserForm()}
 
