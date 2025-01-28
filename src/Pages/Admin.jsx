@@ -36,11 +36,11 @@ export default function Admin() {
     phoneNumber: '',
     password: '',
     confirmPassword: '',
-    custommerId: localStorage.getItem("custommerid"), // Assuming the customerId is stored in localStorage
+    custommerId: localStorage.getItem("custommerid"),
   });
 
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false); // For form submission state
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     async function fetchDevices() {
@@ -73,11 +73,7 @@ export default function Admin() {
   }, [fetchCustomers]);
 
   const handleSessionChange = (event, newValue) => {
-    setLoading(true);
-    setTimeout(() => {
-      setSwapsession(newValue);
-      setLoading(false);
-    }, 2000);
+    setSwapsession(newValue);
   };
 
   const handleDeleteDevice = async (deviceString) => {
@@ -156,7 +152,6 @@ export default function Admin() {
       } else {
         setSnackbarMessage("User added successfully under the same customer ID!");
         setOpenSnackbar(true);
-        // Optionally, reset the form or update the users list here
       }
     } catch (error) {
       setSnackbarMessage("Error adding user!");
@@ -234,7 +229,7 @@ export default function Admin() {
     <Box sx={{ marginTop: "20px", maxWidth: 500, margin: "auto", borderRadius: 2, boxShadow: 2, padding: 3 }}>
       <Box sx={{ display: "flex", justifyContent: "center", marginBottom: 3 }}>
         <img
-          src="https://www.w3schools.com/w3images/avatar2.png" // Replace with a dynamic image URL if needed
+          src="https://www.w3schools.com/w3images/avatar2.png"
           alt="profile"
           style={{ width: "80px", height: "80px", borderRadius: "50%", border: "2px solid #1976d2" }}
         />
@@ -286,8 +281,8 @@ export default function Admin() {
       <TextField
         label="Password"
         variant="outlined"
-        fullWidth
         type="password"
+        fullWidth
         name="password"
         value={formData.password}
         onChange={handleFormChange}
@@ -298,53 +293,51 @@ export default function Admin() {
       <TextField
         label="Confirm Password"
         variant="outlined"
-        fullWidth
         type="password"
+        fullWidth
         name="confirmPassword"
         value={formData.confirmPassword}
         onChange={handleFormChange}
-        sx={{ marginBottom: "20px" }}
+        sx={{ marginBottom: "10px" }}
         error={!!formErrors.confirmPassword}
         helperText={formErrors.confirmPassword}
       />
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        onClick={handleAddUser}
-        disabled={isSubmitting}
-        sx={{ padding: "10px", fontWeight: "bold", borderRadius: 3 }}
-      >
-        {isSubmitting ? <CircularProgress size={24} color="inherit" /> : "Add User"}
-      </Button>
+      <Box sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddUser}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? <CircularProgress size={24} color="inherit" /> : "Add User"}
+        </Button>
+      </Box>
     </Box>
   );
 
   return (
-    <div style={{ padding: "20px" }}>
-      <Tabs value={swapsession}  onChange={handleSessionChange} variant="scrollable" scrollButtons="auto" aria-label="session tabs" >
-        <Tab label="Login Devices" value="checkyourdevices" />
+    <Box sx={{ padding: 4 }}>
+      <Tabs value={swapsession} onChange={handleSessionChange} centered>
         <Tab label="Profile" value="profile" />
-        <Tab label="User Management" value="usermanagement" />
-        <Tab label="Add User" value="adduser" />
+        <Tab label="Devices" value="devices" />
+        <Tab label="Users" value="users" />
+        <Tab label="Add User" value="addUser" />
       </Tabs>
-      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-        <IconButton onClick={() => handleSessionChange(null, "checkyourdevices")}>
-          <ArrowBackIcon />
-        </IconButton>
-        <IconButton onClick={() => handleSessionChange(null, "adduser")}>
-          <ArrowForwardIcon />
-        </IconButton>
-      </Box>
-      {swapsession === "checkyourdevices" && renderDeviceDetails()}
+
       {swapsession === "profile" && <AdminProfile />}
-      {swapsession === "usermanagement" && renderUsers()}
-      {swapsession === "adduser" && renderAddUserForm()}
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={() => setOpenSnackbar(false)}>
-        <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: "100%" }}>
+      {swapsession === "devices" && renderDeviceDetails()}
+      {swapsession === "users" && renderUsers()}
+      {swapsession === "addUser" && renderAddUserForm()}
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert onClose={() => setOpenSnackbar(false)} severity="info">
           {snackbarMessage}
         </Alert>
       </Snackbar>
-    </div>
+    </Box>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -6,13 +6,14 @@ import {
 } from "react-router-dom";
 import { useStore } from "./Store/Store";
 
-import LoginPage from "./Pages/LoginPage";
-import SignupPage from "./Pages/SignupPage";
-import HomePage from "./Pages/HomePage";
-import Layout from "./Layout/Layout";
-import NotFoundPage from "./NotFoundPage";
-import Profile from "./Pages/Profile";
-import Admin from "./Pages/Admin";
+// Lazy loading components
+const LoginPage = React.lazy(() => import("./Pages/LoginPage"));
+const SignupPage = React.lazy(() => import("./Pages/SignupPage"));
+const HomePage = React.lazy(() => import("./Pages/HomePage"));
+const Layout = React.lazy(() => import("./Layout/Layout"));
+const NotFoundPage = React.lazy(() => import("./NotFoundPage"));
+const Profile = React.lazy(() => import("./Pages/Profile"));
+const Admin = React.lazy(() => import("./Pages/Admin"));
 
 export default function App() {
   const { isLogin, isAdmin } = useStore();
@@ -68,5 +69,9 @@ export default function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
