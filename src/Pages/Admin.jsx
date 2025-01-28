@@ -184,13 +184,13 @@ export default function Admin() {
                 Device ID: {device.deviceString}
               </Typography>
               <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Customer ID: {device.customerId}
+                Customer ID: {device.custommerId}
               </Typography>
               <Typography variant="body2" sx={{ marginTop: "8px" }}>
                 Email: {device.email}
               </Typography>
               <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Details: {device.deviceDetails}
+                Details: {device.devicedetails}
               </Typography>
             </CardContent>
             <IconButton onClick={() => handleDeleteDevice(device.deviceString)} sx={{ position: "absolute", top: 10, right: 10, color: "#d32f2f" }}>

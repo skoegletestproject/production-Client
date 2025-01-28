@@ -56,22 +56,24 @@ const Navbar = () => {
                 )}
                 {isLogin && (
                   <>
-                    {isAdmin && (
+                    {isAdmin ? (
                       <Button component={Link} to="/mbpannel/admin" color="inherit">
                         Admin
+                      </Button>
+                    ) : (
+                      <Button component={Link} to="/profile" color="inherit">
+                        Profile
                       </Button>
                     )}
                     <Button component={Link} to="/" color="inherit">
                       Home
-                    </Button>
-                    <Button component={Link} to="/profile" color="inherit">
-                      Profile
                     </Button>
                     <Button component={Link} onClick={LogotManage} to="/login" color="inherit">
                       Logout
                     </Button>
                   </>
                 )}
+
               </>
             )}
           </Box>
