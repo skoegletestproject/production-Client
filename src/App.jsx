@@ -5,7 +5,12 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useStore } from "./Store/Store";
+import {
 
+  Box,
+
+  CircularProgress,
+} from "@mui/material";
 // Lazy loading components
 const LoginPage = React.lazy(() => import("./Pages/LoginPage"));
 const SignupPage = React.lazy(() => import("./Pages/SignupPage"));
@@ -29,6 +34,17 @@ export default function App() {
   const AdminRoute = ({ element }) => {
     return isLogin && isAdmin ? element : <Navigate to="/profile" />;
   };
+
+
+  function Loading() {
+    return (
+      <Layout>
+        <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+          <CircularProgress />
+        </Box>
+      </Layout>
+    );
+  }
 
   const router = createBrowserRouter([
     {
@@ -70,7 +86,7 @@ export default function App() {
   ]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={Loading()}>
       <RouterProvider router={router} />
     </Suspense>
   );
