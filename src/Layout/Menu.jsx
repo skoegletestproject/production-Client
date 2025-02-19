@@ -5,11 +5,11 @@ import { useLocation, Link } from 'react-router-dom'; // Import for routing and 
 import { useStore } from '../Store/Store';
 
 const Menu = () => {
-  const { isAdmin, isLogin, setisLogin, logout } = useStore();
+  const { isAdmin, isLogin, setisLogin } = useStore();
   const location = useLocation(); // Get the current route location
 
   const handleLogout = () => {
-    logout();
+    console.log("logout")
     setisLogin(false);
     localStorage.clear()
   };
@@ -35,7 +35,7 @@ const Menu = () => {
             label="Live Preview"
             icon={<Visibility />}
             component={Link}
-            to="/live" // Live preview route
+            to="/track" // Live preview route
             style={{ color: isActive('/live') ? 'primary' : 'inherit' }} // Highlight active route
           />
           
@@ -84,6 +84,8 @@ const Menu = () => {
       ) : (
         <BottomNavigationAction
           label="Logout"
+          to="/login"
+          component={Link}
           icon={<ExitToApp />}
           onClick={handleLogout}
           style={{ color: isActive('/login') ? 'primary' : 'inherit' }} 

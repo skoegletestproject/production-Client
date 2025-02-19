@@ -2,7 +2,8 @@ import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { useStore } from "./Store/Store";
 import { Box, CircularProgress } from "@mui/material";
-
+import Live from "./Pages/Live";
+import Track from "./Pages/Track";
 // Lazy loading components
 const LoginPage = React.lazy(() => import("./Pages/LoginPage"));
 const SignupPage = React.lazy(() => import("./Pages/SignupPage"));
@@ -38,7 +39,7 @@ export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <ProtectedRoute element={<HomePage />} />,
+      element: <ProtectedRoute element={<Live/>} />,
     },
     {
       path: "/signup",
@@ -52,17 +53,21 @@ export default function App() {
       path: "/live",
       element: (
         <ProtectedRoute
-          element={
-            <Layout>
-              <h1>Live</h1>
-            </Layout>
-          }
+          element={<Live/>}
         />
       ),
     },
     {
       path: "/profile",
       element: <ProtectedRoute element={<Profile />} />,
+    },
+    {
+       path:"/track",
+        element:(
+          <ProtectedRoute
+            element={<Track/>}
+          />
+        )
     },
     {
       path: "/mbpannel/admin",
