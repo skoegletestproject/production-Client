@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { signup, login, logout, verifyUser } from "./AuthApis";
+import { signup, login, verifyUser } from "./AuthApis";
 import { fetchUserProfile, updateUserProfile } from "./ProfileApis";
-import { fetchDevicesByCustomerId,deleteDeviceByDeviceString,deleteMultipleDevices,AddUser,addDevicesToCustomer, fetchCustomers, deleteCustomer } from "./DeviceApi";
+import { fetchDevicesByCustomerId,GetRegisterdDevices,deleteDeviceByDeviceString,deleteMultipleDevices,AddUser,addDevicesToCustomer, fetchCustomers, deleteCustomer, deleteRegesteredDevice } from "./DeviceApi";
 
 const StoreContext = createContext(null);
 
@@ -14,11 +14,11 @@ export function useStore() {
 }
 
 export function StoreProvider({ children }) {
-  const [isLogin, setisLogin] = useState(localStorage?.getItem("isLogin") === "true");
-  const [isAdmin, setisAdmin] = useState(localStorage?.getItem("isAdmin") === "true");
+  const [isLogin, setisLogin] = useState(localStorage?.getItem("isLogin") === "true" || false);
+  const [isAdmin, setisAdmin] = useState(localStorage?.getItem("isAdmin") === "true" || false);
   const [token, settoken] = useState(localStorage?.getItem("token") || "");
-  
-  // console.log({ isLogin, isAdmin, token });
+  const [skipotp, setskipotp] = useState(true);
+
 
   useEffect(() => {
     async function VeruserState() {
@@ -30,13 +30,13 @@ export function StoreProvider({ children }) {
           setisAdmin(result?.isAdmin || false);
           localStorage.setItem("isAdmin",result?.isAdmin)
           localStorage.setItem("isLogin",result?.valid)
-          // console.log("User verified successfully:", result);
+
         } else {
-          handleLogout(); // Logout on invalid response
+          handleLogout(); 
         }
       } catch (error) {
         console.error("Error verifying user:", error);
-        handleLogout(); // Logout on error
+        handleLogout(); 
       }
     }
  if(isLogin){
@@ -46,13 +46,11 @@ export function StoreProvider({ children }) {
   }, []);
 
   const handleLogout = () => {
-    logout(); // Call your logout API
-    localStorage.clear(); // Clear all local storage
+    localStorage.clear(); 
     setisLogin(false);
     setisAdmin(false);
     settoken("");
     console.clear()
-    // console.log("User logged out");
   };
 
   return (
@@ -60,14 +58,14 @@ export function StoreProvider({ children }) {
       value={{
         signup,
         login,
-        logout,
         setisAdmin,
         setisLogin,
+        skipotp,
         settoken,
         isLogin,
         isAdmin,
+        setskipotp,
         token,
-        user: true,
         fetchUserProfile,
         updateUserProfile,
         fetchDevicesByCustomerId,
@@ -76,7 +74,9 @@ export function StoreProvider({ children }) {
         addDevicesToCustomer,
         AddUser,
         fetchCustomers,
-        deleteCustomer
+        deleteCustomer,
+        GetRegisterdDevices,
+        deleteRegesteredDevice
       }}
     >
       {children}

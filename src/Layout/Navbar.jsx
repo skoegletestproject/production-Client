@@ -40,7 +40,7 @@ const Navbar = () => {
             </Typography>
           </Box>
 
-          {/* Display Menu Links Only for Larger Screens */}
+       
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: isMobile ? 'flex-end' : 'flex-start' }}>
             {!isMobile && (
               <>

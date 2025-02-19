@@ -1,16 +1,8 @@
 import React, { Suspense } from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { useStore } from "./Store/Store";
-import {
+import { Box, CircularProgress } from "@mui/material";
 
-  Box,
-
-  CircularProgress,
-} from "@mui/material";
 // Lazy loading components
 const LoginPage = React.lazy(() => import("./Pages/LoginPage"));
 const SignupPage = React.lazy(() => import("./Pages/SignupPage"));
@@ -35,14 +27,11 @@ export default function App() {
     return isLogin && isAdmin ? element : <Navigate to="/profile" />;
   };
 
-
   function Loading() {
     return (
-      <Layout>
-        <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-          <CircularProgress />
-        </Box>
-      </Layout>
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
     );
   }
 
@@ -77,7 +66,15 @@ export default function App() {
     },
     {
       path: "/mbpannel/admin",
-      element: <AdminRoute element={<Layout><Admin /></Layout>} />,
+      element: (
+        <AdminRoute
+          element={
+            <Layout>
+              <Admin />
+            </Layout>
+          }
+        />
+      ),
     },
     {
       path: "*",
@@ -86,7 +83,7 @@ export default function App() {
   ]);
 
   return (
-    <Suspense fallback={Loading()}>
+    <Suspense fallback={<Loading />}>
       <RouterProvider router={router} />
     </Suspense>
   );

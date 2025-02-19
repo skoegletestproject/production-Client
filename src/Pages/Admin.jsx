@@ -168,66 +168,66 @@ export default function Admin() {
     overflow: "hidden",
     position: "relative",
   };
-
   const renderDeviceDetails = () => (
-    <div style={{height:"700px"}}>
-    <Grid container spacing={3}>
-      {devices.map((device) => (
-        <Grid item xs={12} sm={6} md={10} key={device._id}>
-          <Card variant="outlined" sx={cardStyle}>
-            <CardContent>
-              <Typography variant="h6" sx={{ color: "#1976d2", fontWeight: "bold" }}>
-                Device ID: {device.deviceString}
-              </Typography>
-              <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Customer ID: {device.custommerId}
-              </Typography>
-              <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Email: {device.email}
-              </Typography>
-              <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Details: {device.devicedetails}
-              </Typography>
-            </CardContent>
-            <IconButton onClick={() => handleDeleteDevice(device.deviceString)} sx={{ position: "absolute", top: 10, right: 10, color: "#d32f2f" }}>
-              <DeleteIcon />
-            </IconButton>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
-    </div>
+    <Box sx={{ maxHeight: "600px", overflowY: "auto", paddingRight: "8px" }}>
+      <Grid container spacing={3}>
+        {devices.map((device) => (
+          <Grid item xs={12} sm={6} md={10} key={device._id}>
+            <Card variant="outlined" sx={cardStyle}>
+              <CardContent>
+                <Typography variant="h6" sx={{ color: "#1976d2", fontWeight: "bold" }}>
+                  Device ID: {device.deviceString}
+                </Typography>
+                <Typography variant="body2" sx={{ marginTop: "8px" }}>
+                  Customer ID: {device.custommerId}
+                </Typography>
+                <Typography variant="body2" sx={{ marginTop: "8px" }}>
+                  Email: {device.email}
+                </Typography>
+                <Typography variant="body2" sx={{ marginTop: "8px" }}>
+                  Details: {device.devicedetails}
+                </Typography>
+              </CardContent>
+              <IconButton onClick={() => handleDeleteDevice(device.deviceString)} sx={{ position: "absolute", top: 10, right: 10, color: "#d32f2f" }}>
+                <DeleteIcon />
+              </IconButton>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
-
+  
   const renderUsers = () => (
-    <div style={{height:"700px"}}>
-    <Grid container spacing={3}>
-      {users.map((user) => (
-        <Grid item xs={12} sm={10} md={10} key={user._id}>
-          <Card variant="outlined" sx={cardStyle}>
-            <CardContent>
-              <Typography variant="h6" sx={{ color: "#1976d2", fontWeight: "bold" }}>
-                Name: {user.firstName + " " + user.lastName}
-              </Typography>
-              <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Email: {user.email}
-              </Typography>
-              <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Password: {user.password}
-              </Typography>
-              <Typography variant="body2" sx={{ marginTop: "8px" }}>
-                Customer ID: {user.custommerId}
-              </Typography>
-            </CardContent>
-            <IconButton onClick={() => handleDeleteUser(user.custommerId)} sx={{ position: "absolute", top: 10, right: 10, color: "#d32f2f" }}>
-              <DeleteIcon />
-            </IconButton>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
-    </div>
+    <Box sx={{ maxHeight: "600px", overflowY: "auto", paddingRight: "8px" }}>
+      <Grid container spacing={3}>
+        {users.map((user) => (
+          <Grid item xs={12} sm={10} md={10} key={user._id}>
+            <Card variant="outlined" sx={cardStyle}>
+              <CardContent>
+                <Typography variant="h6" sx={{ color: "#1976d2", fontWeight: "bold" }}>
+                  Name: {user.firstName + " " + user.lastName}
+                </Typography>
+                <Typography variant="body2" sx={{ marginTop: "8px" }}>
+                  Email: {user.email}
+                </Typography>
+                <Typography variant="body2" sx={{ marginTop: "8px" }}>
+                  Password: {user.password}
+                </Typography>
+                <Typography variant="body2" sx={{ marginTop: "8px" }}>
+                  Customer ID: {user.custommerId}
+                </Typography>
+              </CardContent>
+              <IconButton onClick={() => handleDeleteUser(user.custommerId)} sx={{ position: "absolute", top: 10, right: 10, color: "#d32f2f" }}>
+                <DeleteIcon />
+              </IconButton>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
+  
 
   const renderAddUserForm = () => (
     <Box sx={{ marginTop: "20px", maxWidth: 500, margin: "auto", borderRadius: 2, boxShadow: 2, padding: 3 }}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, CircularProgress } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Footor from "./Footor";
 import Navbar from "./Navbar";
 import { Helmet } from "react-helmet";
@@ -9,38 +9,14 @@ import Menu from "./Menu";
 
 export default function Layout({ children, titlename }) {
   const [isMobile, setIsMobile] = useState(false);
-  const [showFlashScreen, setShowFlashScreen] = useState(false);
-
-  useEffect(() => {
-    // Check if user has already visited the site
-    const hasVisited = localStorage.getItem("hasVisited");
-
-    if (!hasVisited) {
-      setShowFlashScreen(true); // Show the flash screen
-      fetch("https://production-server-we1m.onrender.com/ping")
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.message === "We Got your Request") {
-            localStorage.setItem("hasVisited", "true"); // Set flag to indicate first visit
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching API:", error);
-        })
-        .finally(() => {
-          setShowFlashScreen(false); // Hide flash screen when the response is received
-        });
-    }
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Mobile or tablet screen
+      setIsMobile(window.innerWidth <= 768);
     };
 
     handleResize(); // Check size on initial load
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -50,7 +26,7 @@ export default function Layout({ children, titlename }) {
     minHeight: "100vh",
     position: "relative",
     overflow: "hidden",
-    backgroundColor: "#f1f1f1", // Light background color
+    backgroundColor: "#f1f1f1",
   };
 
   const layoutContentStyle = {
@@ -60,8 +36,8 @@ export default function Layout({ children, titlename }) {
     justifyContent: "center",
     alignItems: "center",
     padding: "20px",
-    marginTop: "60px", // Offset for fixed Navbar
-    marginBottom: isMobile ? "60px" : "0", // Offset for fixed Menu on mobile
+    marginTop: "60px", 
+    marginBottom: isMobile ? "60px" : "0",
   };
 
   const navbarStyle = {
@@ -70,7 +46,7 @@ export default function Layout({ children, titlename }) {
     left: 0,
     width: "100%",
     zIndex: 1000,
-    backgroundColor: "#00796b", // Green background for the navbar
+    backgroundColor: "#00796b",
   };
 
   const menuStyle = {
@@ -79,39 +55,17 @@ export default function Layout({ children, titlename }) {
     left: 0,
     width: "100%",
     zIndex: 1000,
-    backgroundColor: "#00796b", // Green background for the menu
+    backgroundColor: "#00796b",
   };
 
   const footorStyle = {
-    backgroundColor: "#00796b", // Green footer background
+    backgroundColor: "#00796b",
     textAlign: "center",
     padding: "10px 0",
     width: "100%",
     marginTop: "auto",
-    color: "#fff", // White text color
+    color: "#fff",
   };
-
-  if (showFlashScreen) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          width: "100vw",
-          backgroundColor: "#00796b", // Flash screen in green color
-          color: "#fff",
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          Skoegle
-        </Typography>
-        <CircularProgress color="inherit" />
-      </Box>
-    );
-  }
 
   return (
     <div style={layoutContainerStyle}>
