@@ -3,16 +3,16 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
+  padding: 15px;
 }
 
 .map-container {
   position: relative;
-  width: 100%;
+  width: 110%;
   max-width: 800px;
   height: 500px;
   margin-bottom: 20px;
-  border: 2px solid #000; /* Added border */
+  border: 3px solid #000; /* Added border */
 }
 
 .map {

@@ -13,7 +13,7 @@ import "./Live.css"; // Import the CSS file
 import { firebaseConfig } from "./Firebase";
 import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Box, CircularProgress } from '@mui/material';
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
@@ -35,12 +35,14 @@ export default function Live() {
   const [deviceOptions, setDeviceOptions] = useState([]);
   const [error, setError] = useState(null);
   const { GetRegisterdDevices, deleteRegesteredDevice } = useStore();
+  const [loading, setLoading] = useState(true);
   const [nickname, setNickname] = useState("");
   const defaultLatLng = { lat: 20.5937, lng: 78.9629 };
 
   useEffect(() => {
     const fetchDevices = async () => {
       try {
+        setLoading(true);
         const response = await GetRegisterdDevices();
         if (response?.devices?.length > 0) {
           const options = response.devices.map((device) => ({
@@ -55,6 +57,8 @@ export default function Live() {
       } catch (error) {
         console.error("Error fetching registered devices:", error);
         setError("Failed to fetch registered devices.");
+      }finally{
+        setLoading(false);
       }
     };
     fetchDevices();
@@ -163,6 +167,16 @@ export default function Live() {
       toast.error("Failed to delete geofencing coordinates.");
     }
   };
+
+  if (loading) {
+    return (
+      <Layout>
+        <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+          <CircularProgress />
+        </Box>
+      </Layout>
+    );
+  }
 
   return (
     <Layout title={"Vmarg - Live"}>
