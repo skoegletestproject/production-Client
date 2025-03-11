@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import Footor from "./Footor"; // Assuming "Footer" is misspelled
+import Footor from "./Footor"; // Assuming you meant "Footer"
 import Navbar from "./Navbar";
 import { Helmet } from "react-helmet";
 import { ToastContainer } from "react-toastify";
@@ -64,7 +64,7 @@ export default function Layout({ children, titlename }) {
           alignItems: "center",
           padding: "20px",
           mt: "60px",
-          mb: isMobile ? "60px" : "0",
+          mb: isMobile ? "80px" : "0", // Extra bottom margin for mobile
         }}
       >
         {children}
@@ -80,8 +80,12 @@ export default function Layout({ children, titlename }) {
             width: "100%", 
             zIndex: 1000, 
             backgroundColor: "#00796b",
-            paddingBottom: "env(safe-area-inset-bottom, 10px)", // Prevents overlap
+            paddingBottom: "env(safe-area-inset-bottom, 25px)", // Increased padding for safety
+            minHeight: "60px", // Ensures enough space above navigation buttons
             boxShadow: "0px -2px 10px rgba(0,0,0,0.1)", // Adds a small shadow for better UI
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <Menu />
