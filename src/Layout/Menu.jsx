@@ -1,97 +1,104 @@
 import React from 'react';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { Home, Login, PersonAdd, ExitToApp, Visibility, AccountCircle, SupervisorAccount } from '@mui/icons-material'; // Import SupervisorAccount for Admin
-import { useLocation, Link } from 'react-router-dom'; // Import for routing and location tracking
+import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
+import { Home, Login, PersonAdd, ExitToApp, Visibility, AccountCircle, SupervisorAccount } from '@mui/icons-material';
+import { useLocation, Link } from 'react-router-dom';
 import { useStore } from '../Store/Store';
 
 const Menu = () => {
   const { isAdmin, isLogin, setisLogin } = useStore();
-  const location = useLocation(); // Get the current route location
+  const location = useLocation();
 
   const handleLogout = () => {
-    console.log("logout")
+    console.log("logout");
     setisLogin(false);
-    localStorage.clear()
+    localStorage.clear();
   };
 
-  const isActive = (path) => location.pathname === path; // Check if the current path is active
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <BottomNavigation
-      showLabels
-      style={{ position: 'fixed', bottom: 0, width: '100%' }}
+    <Box
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: "100%",
+        zIndex: 1000,
+        backgroundColor: "white",
+        paddingBottom: "env(safe-area-inset-bottom, 20px)", // Prevents overlap with navigation buttons
+        minHeight: "70px", // Ensures enough height
+        boxShadow: "0px -2px 10px rgba(0,0,0,0.1)", // UI improvement
+      }}
     >
-      {/* Show Home and Live Preview only when the user is logged in */}
-      {isLogin && (
-        <>
-          <BottomNavigationAction
-            label="Home"
-            icon={<Home />}
-            component={Link} // Wrap with Link for routing
-            to="/" // Home route
-            style={{ color: isActive('/') ? 'primary' : 'inherit' }} // Highlight active route
-          />
-          <BottomNavigationAction
-            label="Live Preview"
-            icon={<Visibility />}
-            component={Link}
-            to="/track" // Live preview route
-            style={{ color: isActive('/live') ? 'primary' : 'inherit' }} // Highlight active route
-          />
-          
-          {/* Show Profile icon only when the user is not an admin */}
-          {!isAdmin && (
+      <BottomNavigation showLabels>
+        {isLogin && (
+          <>
             <BottomNavigationAction
-              label="Profile"
-              icon={<AccountCircle />}
+              label="Home"
+              icon={<Home />}
               component={Link}
-              to="/profile" // Profile route
-              style={{ color: isActive('/profile') ? 'primary' : 'inherit' }} // Highlight active route
+              to="/"
+              sx={{ color: isActive('/') ? 'primary.main' : 'inherit' }}
             />
-          )}
-
-          {/* Admin icon, shown only if user is an admin */}
-          {isAdmin && (
             <BottomNavigationAction
-              label="Admin"
-              icon={<SupervisorAccount />} // Admin icon using SupervisorAccount
+              label="Live Preview"
+              icon={<Visibility />}
               component={Link}
-              to="/mbpannel/admin" // Admin route
-              style={{ color: isActive('/admin') ? 'primary' : 'inherit' }} // Highlight active route
+              to="/track"
+              sx={{ color: isActive('/track') ? 'primary.main' : 'inherit' }}
             />
-          )}
-        </>
-      )}
+            
+            {!isAdmin && (
+              <BottomNavigationAction
+                label="Profile"
+                icon={<AccountCircle />}
+                component={Link}
+                to="/profile"
+                sx={{ color: isActive('/profile') ? 'primary.main' : 'inherit' }}
+              />
+            )}
 
-      {/* Conditional buttons for login/signup when not logged in */}
-      {!isLogin ? (
-        <>
+            {isAdmin && (
+              <BottomNavigationAction
+                label="Admin"
+                icon={<SupervisorAccount />}
+                component={Link}
+                to="/mbpannel/admin"
+                sx={{ color: isActive('/mbpannel/admin') ? 'primary.main' : 'inherit' }}
+              />
+            )}
+          </>
+        )}
+
+        {!isLogin ? (
+          <>
+            <BottomNavigationAction
+              label="Login"
+              icon={<Login />}
+              component={Link}
+              to="/login"
+              sx={{ color: isActive('/login') ? 'primary.main' : 'inherit' }}
+            />
+            <BottomNavigationAction
+              label="Signup"
+              icon={<PersonAdd />}
+              component={Link}
+              to="/signup"
+              sx={{ color: isActive('/signup') ? 'primary.main' : 'inherit' }}
+            />
+          </>
+        ) : (
           <BottomNavigationAction
-            label="Login"
-            icon={<Login />}
+            label="Logout"
+            to="/login"
             component={Link}
-            to="/login" // Login route
-            style={{ color: isActive('/login') ? 'primary' : 'inherit' }} // Highlight active route
+            icon={<ExitToApp />}
+            onClick={handleLogout}
+            sx={{ color: 'error.main' }}
           />
-          <BottomNavigationAction
-            label="Signup"
-            icon={<PersonAdd />}
-            component={Link}
-            to="/signup" // Signup route
-            style={{ color: isActive('/signup') ? 'primary' : 'inherit' }} // Highlight active route
-          />
-        </>
-      ) : (
-        <BottomNavigationAction
-          label="Logout"
-          to="/login"
-          component={Link}
-          icon={<ExitToApp />}
-          onClick={handleLogout}
-          style={{ color: isActive('/login') ? 'primary' : 'inherit' }} 
-        />
-      )}
-    </BottomNavigation>
+        )}
+      </BottomNavigation>
+    </Box>
   );
 };
 
