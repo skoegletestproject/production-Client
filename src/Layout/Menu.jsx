@@ -25,8 +25,8 @@ const Menu = () => {
         width: "100%",
         zIndex: 1000,
         backgroundColor: "white",
-        paddingBottom: "env(safe-area-inset-bottom, 20px)", // Prevents overlap with navigation buttons
-        minHeight: "70px", // Ensures enough height
+        paddingBottom: "env(safe-area-inset-bottom, 50px)", // Prevents overlap with navigation buttons
+        minHeight: "90px", // Ensures enough height
         boxShadow: "0px -2px 10px rgba(0,0,0,0.1)", // UI improvement
       }}
     >
